@@ -11,12 +11,19 @@ import axios from 'axios'
 Vue.prototype.$axios = axios
 // 配置根路径
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
-
+// 请求拦截器
+axios.interceptors.request.use(config => {
+  // 往headers里添加token令牌
+  config.headers.Authorization = window.sessionStorage.getItem('token')
+  console.log(config)
+  return config
+})
 //导入element组件库
 import ElementUI, { Message } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 // 引入登录提示框
 Vue.prototype.$message = Message
+// Vue.prototype.$confirm = MessageBox.confirm
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 

@@ -22,7 +22,7 @@
         <!-- 登录 重置按钮-->
         <el-form-item label="" class="btns">
           <el-button type="primary" @click="login" :plain="true">登录</el-button>
-          <el-button type="info" @click='resetLoginForm'>重置</el-button>
+          <el-button type="info" plain @click='resetLoginForm'>重置</el-button>
         </el-form-item>
       </el-form>
 
@@ -72,7 +72,6 @@ export default {
               // 将token保存到window下的sessionStorage中
               window.sessionStorage.setItem('token',res.data.data.token);
               this.$router.push('/home');
-              console.log(res.data);
             }
             
           })
@@ -124,6 +123,6 @@ export default {
 }
 .btns{
   display: flex;
-  justify-content: flex-end;
+  justify-content:space-evenly;
 }
 </style>
