@@ -43,7 +43,8 @@
             <el-button type="primary" icon="el-icon-edit" size='mini' @click="showEditDialog(scope.row.id)"></el-button>
             <el-button type="warning" icon="el-icon-delete" size='mini' @click="removeUserById(scope.row.id)"></el-button>
             <el-tooltip class="item" effect="dark" content="分配角色" placement="top" :enterable='false'>
-              <el-button type="info" icon="el-icon-share" size='mini'></el-button>
+              <el-button type="info" icon="el-icon-share" 
+              size='mini' @click="setRole(scope.row)"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -116,6 +117,29 @@
         <el-button type="primary" @click="editUser">确 定</el-button>
       </span>
     </el-dialog>
+
+
+    <!-- 分配权限对话框 -->
+    <el-dialog
+      title="提示"
+      :visible.sync="setRoleDialogVisable"
+      width="30%" @close='setRoleDialogClosed'>
+      <div>
+        <p>当前用户:{{userRightInfo.username}}</p>
+        <p>当前角色:{{userRightInfo.role_name}}</p>
+        <p>分配新角色:
+           <el-select v-model="selectRoleId" placeholder="请选择">
+            <el-option v-for="item in roleList" :key="item.id"
+              :label="item.roleName" :value="item.id">
+            </el-option>
+          </el-select>
+        </p>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="setRoleDialogVisable = false">取 消</el-button>
+        <el-button type="primary" @click="saveRoleInfo">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -185,7 +209,15 @@ export default {
       // 修改用户信息对话框，默认隐藏
       editDialogVisable:false,
       // 查询并保存用户旧信息
-      editForm:{}
+      editForm:{},
+      // 控制分配角色对话框显示与隐藏
+      setRoleDialogVisable:false,
+      // 当前需要被分配的用户信息
+      userRightInfo:{},
+      // 所有角色的数据列表
+      roleList:[],
+      // 已选中的角色
+      selectRoleId:''
     }
   },
   created(){
@@ -278,6 +310,28 @@ export default {
       this.$message.error('删除用户成功')
       this.getUsersList()
       
+    },
+    async setRole(userInfo){//点击分配角色按钮
+      this.userRightInfo = userInfo
+      const {data:res} = await this.$axios.get('roles')
+      // console.log(res)
+      if(res.meta.status !== 200) return this.$message.error('获取角色信息失败')
+      this.$message.success('获取角色信息成功')
+      this.roleList = res.data
+      this.setRoleDialogVisable = true
+    },
+    async saveRoleInfo(){//点击分配角色确定按钮，更新角色信息
+      if(!this.selectRoleId) return this.$message.info('请选择角色')
+      const {data:res} = await this.$axios.put(`users/${this.userRightInfo.id}/role`,{rid:this.selectRoleId})
+      // console.log(res)
+      if(res.meta.status !== 200) return this.$message.error('更新角色信息失败')
+      this.$message.success('更新角色信息成功')
+      this.getUsersList()
+      this.setRoleDialogVisable = false
+    },
+    setRoleDialogClosed(){//监听分配权限对话框关闭
+      this.selectRoleId = ''//重置已选中的角色
+      this.userRightInfo = ''//重置当前需要被分配的用户信息
     }
   }
 }
