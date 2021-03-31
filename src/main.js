@@ -6,6 +6,8 @@ import store from './store'
 import './assets/css/global.css'
 // 导入阿里图标
 import './assets/fonts/iconfont.css'
+// 引入vue-table-with-tree-grid
+import TreeTable from 'vue-table-with-tree-grid'
 
 import axios from 'axios'
 Vue.prototype.$axios = axios
@@ -23,8 +25,10 @@ import ElementUI, { Message } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 // 引入登录提示框
 Vue.prototype.$message = Message
-// Vue.prototype.$confirm = MessageBox.confirm
-Vue.use(ElementUI);
+
+Vue.use(ElementUI)
+Vue.component('tree-table', TreeTable)
+
 Vue.config.productionTip = false
 
 new Vue({
