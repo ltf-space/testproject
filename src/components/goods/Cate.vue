@@ -159,7 +159,7 @@ export default {
         children:'children',
         checkStrictly : 'true'//可选择任意一级分类
       },
-      // 选中的父级分类额id数组
+      // 选中的父级分类的id数组
       selectedKeys:[],
       // 控制编辑对话框隐藏
       editCateDialogVisible:false,
