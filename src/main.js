@@ -8,6 +8,9 @@ import './assets/css/global.css'
 import './assets/fonts/iconfont.css'
 // 引入vue-table-with-tree-grid
 import TreeTable from 'vue-table-with-tree-grid'
+// 引入时间格式
+import moment from 'moment'
+Vue.prototype.moment = moment
 
 import axios from 'axios'
 Vue.prototype.$axios = axios

@@ -82,7 +82,7 @@ export default {
     this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods:{
-    LoginOut(){//推出按钮事件
+    LoginOut(){//退出按钮事件
       // 清除token值
       window.sessionStorage.clear();
       // 回到登录页
