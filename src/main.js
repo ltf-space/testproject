@@ -11,6 +11,12 @@ import TreeTable from 'vue-table-with-tree-grid'
 // 引入时间格式
 import moment from 'moment'
 Vue.prototype.moment = moment
+//引入富文本编辑器
+import VueQuillEditor from 'vue-quill-editor'
+//导入富文本编辑器css样式
+import 'quill/dist/quill.core.css' // import styles
+import 'quill/dist/quill.snow.css' // for snow theme
+import 'quill/dist/quill.bubble.css' // for bubble theme
 
 import axios from 'axios'
 Vue.prototype.$axios = axios
@@ -31,6 +37,7 @@ Vue.prototype.$message = Message
 
 Vue.use(ElementUI)
 Vue.component('tree-table', TreeTable)
+Vue.use(VueQuillEditor)
 
 Vue.config.productionTip = false
 
