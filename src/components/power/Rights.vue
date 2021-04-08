@@ -10,9 +10,9 @@
     <el-table :data="rightsList" style="width: 100%" 
     :stripe = 'true' :border = 'true'>
       <el-table-column type='index' label="#"></el-table-column>
-      <el-table-column prop="authName" label="权限名称" width="180"></el-table-column>
-      <el-table-column prop="path" label="路径"  width="180"> </el-table-column>
-      <el-table-column prop="level" label="权限等级"  width="180">
+      <el-table-column prop="authName" label="权限名称" ></el-table-column>
+      <el-table-column prop="path" label="路径"  > </el-table-column>
+      <el-table-column prop="level" label="权限等级"  >
         <template slot-scope="scope">
           <el-tag v-if="scope.row.level === '0' ">标签一</el-tag>
           <el-tag type="success" v-else-if="scope.row.level === '1'">标签二</el-tag>
