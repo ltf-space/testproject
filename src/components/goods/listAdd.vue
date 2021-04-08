@@ -72,7 +72,7 @@
             <quill-editor v-model="addForm.goods_introduce">
 
             </quill-editor>
-            <el-button type='primary'>添加商品</el-button>
+            <el-button type='primary' @click="add">添加商品</el-button>
           </el-tab-pane>
         </el-tabs>
       </el-form>
@@ -89,6 +89,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 export default {
   name:'listAdd',
   components:{},
@@ -109,7 +110,9 @@ export default {
         // 存储上传图片的临时路径
         pics:[],
         // 商品的详情描述
-        goods_introduce:''
+        goods_introduce:'',
+        // 添加商品时保存的商品id和vals
+        attrs:[]
       },
       // 表单验证规则
       addFormRules:{
@@ -191,6 +194,7 @@ export default {
           item.attr_vals = item.attr_vals ? item.attr_vals.split(' ') : []
         });
         this.manyTableData = res.data
+        // console.log(this.manyTableData)
       }else if(this.activeIndex === '2'){
         const {data:res} = await this.$axios.get(`categories/${this.addForm.goods_cat[2]}/attributes`,{params:{sel:'only'}})
         console.log(res)
@@ -226,6 +230,28 @@ export default {
       }
       this.addForm.pics.push(picInfo)
       console.log(this.addForm.pics)
+    },
+    add(){//点击添加商品按钮
+      this.$refs.addFormRef.validate(async valid => {
+        if(!valid)return this.$message.error('请添加必要的表单项')
+        const form = _.cloneDeep(this.addForm)
+        form.goods_cat = form.goods_cat.join(',')//转成数组
+        this.manyTableData.forEach(item => {
+          const newInfo = {
+            attr_id : item.attr_id,
+            attr_value : item.attr_vals.join(' ')//转成字符串
+          }
+          this.addForm.attrs.push(newInfo)
+        })
+        form.attrs = this.addForm.attrs
+        console.log(form)
+        const {data:res} = await this.$axios.post('goods',form)
+        if(res.meta.status !== 201)return this.$message.error('添加失败')
+        console.log(res)
+        this.$message.success('添加成功')
+        this.$router.push('/goods')
+        // this.getCateList()
+      })
     }
   }
 }
