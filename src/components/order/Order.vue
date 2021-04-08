@@ -12,8 +12,9 @@
       <!-- 搜索框 -->
       <el-row :gutter='20'>
         <el-col :span='8'>
-          <el-input placeholder="请输入内容">
-            <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-input placeholder="请输入内容" v-model="queryInfo.query" 
+          clearable @clear='getOrderList'>
+            <el-button slot="append" icon="el-icon-search" @click="getOrderList"></el-button>
           </el-input>
         </el-col>
       </el-row>
@@ -115,14 +116,6 @@ export default {
       addressVisible:false,
       // 全国城市级联选择器
       citydata:citydata,
-      //指定级联选择器的配置对象
-      // cascaderProps:{
-      //   expandTrigger : 'hover',
-      //   value:'cat_id',
-      //   label:'cat_name',
-      //   children:'children',
-      //   // checkStrictly : 'true'//可选择任意一级分类
-      // },
       // 存储级联选择框选中的内容
       addressForm:{
         address1:[],
