@@ -18,6 +18,11 @@ import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
 
+// 引入NProgress优化进度条
+import NProgress from 'nprogress'
+// 引入NProgress 样式
+import 'nprogress/nprogress.css'
+
 import axios from 'axios'
 Vue.prototype.$axios = axios
 // 配置根路径
@@ -26,7 +31,14 @@ axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
 axios.interceptors.request.use(config => {
   // 往headers里添加token令牌
   config.headers.Authorization = window.sessionStorage.getItem('token')
-  console.log(config)
+  // console.log(config)
+  // 显示进度条
+  NProgress.start()
+  return config
+})
+axios.interceptors.response.use(config => {
+  // 取消进度条
+  NProgress.done()
   return config
 })
 //导入element组件库

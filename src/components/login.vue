@@ -37,8 +37,8 @@ export default {
   data(){
     return {
       Loginform:{
-        username:'admin',
-        password:'123456'
+        username:'',
+        password:''
       },
       // 验证输入规则
       LoginformRules:{
@@ -83,13 +83,33 @@ export default {
 </script>
 <style scoped>
 .login_container{
-  height: 100%;
-  background-color: #2b4b6b;
+  width              : 100%;
+  height             : 100%;
+  min-height         : 100vh;
+  background-repeat  : no-repeat;
+  background-position: center;
+  background-size    :cover;
+  overflow           : hidden;
+  animation: getColor 4s ease 0s infinite alternate;
+}
+@keyframes getColor{
+  0%{
+    background-color:purple;
+  }
+  40%{
+    background-color: #ffee99;
+  }
+  70%{
+    background-color: #ccbbff;
+  }
+  100%{
+    background-color: #f39c12;
+  }
 }
 .login_box{
   width: 450px;
   height: 300px;
-  background-color: #fff;
+  background-color: rgba(0, 0, 0, .4);
   border-radius: 5px;
   position: absolute;
   left: 50%;
@@ -122,7 +142,18 @@ export default {
   box-sizing: border-box;
 }
 .btns{
+  width: 410px;
   display: flex;
-  justify-content:space-evenly;
+  justify-content:center;
+}
+</style>
+<style>
+.login_form input.el-input__inner{
+  background-color: transparent;
+  display: block;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #fff;
+  color: #fff;
 }
 </style>

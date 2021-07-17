@@ -4,7 +4,7 @@
     <!-- 头部区域 -->
     <el-header>
       <div>
-        <img src="../assets/image/logo.png" alt="">
+        <img src="../assets/image/image1.jpg" alt="">
         <span>后台管理</span>
       </div>
       <el-button type='info' @click="LoginOut">退出</el-button>
@@ -128,6 +128,7 @@ export default {
 .el-header div img{
   width: 40px;
   height: 40px;
+  border-radius: 50%;
 }
 /* 菜单栏收缩与展开 */
 .toggle-button{
@@ -152,6 +153,7 @@ export default {
 .el-main {
   background-color: #EAEDF1;
   color: #000;
+  height: calc(100vh - 60px);
 }
 /* 给一级菜单图标设置右边距 */
 .iconfont{

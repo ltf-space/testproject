@@ -1,5 +1,7 @@
 <template>
-  <div>Welcome</div>
+  <div>
+    <el-card>Welcome to 后台管理系统</el-card>
+  </div>
 </template>
 
 <script>
